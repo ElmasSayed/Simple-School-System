@@ -35,28 +35,151 @@ app.get('/', (req, res) => res.send('786!BIS'))
 
 // 	SEARCH PAGE
 // 1) For teacher
-app.get('/api/search/teacher', function(req,res){
-	var searchvar = req.param('searchvar');
-	console.log('searchvar:' + searchvar);
-		
-	var qry = 'select * from teachers where tname like "%' + searchvar + '%"'
-	connection.query(qry,[],function(err, result){
-		
+	app.get('/api/search/teacher', function(req,res){
+		var searchvar = req.query.searchvar;
+		console.log('searchvar:' + searchvar);
+			
+		var qry = 'select * from teachers where tname like "%' + searchvar + '%"'
+		connection.query(qry,[],function(err, result){
+			
+			console.log('err' + err);
+			// result = {
+			// 	teacherId:'1',
+			// 	tname:'ali'
+			// }
+			// console.log(result);
+			res.send(result);
+		});
+	})
+
+// 2  /api/search/student
+	app.get('/api/search/student', function(req,res){
+	var searchvar = req.query.searchvar;
+	console.log('searchvar: ' + searchvar);
+
+	var qry = 'select * from students where firstname like "%' + searchvar + '%"'
+	connection.query(qry,[],function(err,result){
 		console.log('err' + err);
-		// result = {
-		// 	teacherId:'1',
-		// 	tname:'ali'
+		// 	result = {
+		// 	studentId:'1',
+		// 	sname:'samia'
 		// }
-		// console.log(result);
+		console.log(result);
+		res.send(result);
+		});
+	})
+
+
+// // 3	/api/search/parent
+// app.get('/api/search/parent', function(req,res){
+// 	var searchvar = req.query.searchvar;
+// 	console.log('searchvar: ' + searchvar);
+
+// 	var qry = 'select * from parents where pname like "%' + searchvar + '%"'
+// 	connection.query(qry,[],function(err, result){
+// 		console.log('err' + err);
+// 		res.send(result);
+// 	});
+// })
+//--------------------
+app.get('/api/search/parent/:searchvar', function(req,res){
+	var searchvar = decodeURI(req.params('searchvar'));
+	console.log('searchvar: ' + searchvar);
+
+	var qry = 'select * from parents where pname like "%' + searchvar + '%"'
+	connection.query(qry,[],function(err, result){
+		console.log('err' + err);
 		res.send(result);
 	});
 })
+//--------------------
 
-// 2	/api/search/student
-	//app.get = ('/api/search/student'), 
+// TEACHERS PAGE  
+// 4	/api/teacher/:teacherId/personalInfo 
+	app.get('/api/teacher/:teacherId/personalInfo', function(req,res){
+		var teacherId = req.params('teacherId');
+		console.log('teacherId: ' + teacherId);
 
-// 3	/api/search/parent
-	
+		var sql = 'select * from teachers where Tid =  ' +  teacherId
+
+		connection.query(sql,[],function(err, result){
+			console.log('err' + err);
+			res.send(result);
+		});
+	})
+
+// ----------------------
+// 5	/api/teacher/:teacherId/students
+	app.get('/api/teacher/:teacherId/students', function(req,res){
+		var teacherId = req.params.teacherId;
+		console.log('teacherId: ' + teacherId);
+
+		// var sql = 'select * from teachers where Tid =  ' +  teacherId
+		var sql = 
+			'SELECT students.firstname, students.lastname ' + 
+			'FROM students ' +
+			'JOIN teacherstudents ON students.sid = teacherstudents.sid ' +
+			'JOIN teachers ON teacherstudents.tid = teachers.tid ' +
+			'Where teachers.tid = ' + teacherId;
+
+			console.log (sql);
+
+		connection.query(sql,[],function(err, result){
+			console.log('err' + err);
+			res.send(result);
+		});
+	})
+
+// -------------------------------------------
+// 6	/api/teacher/:teacherId/attendance
+	app.get ('/api/teacher/:teacherId/attendance', function(req,res){
+		var teacherId = req.params.teacherId;
+		console.log('teacherId: ' + teacherId);
+		
+		var sql = 
+		'select * from teacherattendance ' +
+		'where tid = ' + teacherId;
+
+		console.log (sql);
+
+		connection.query(sql,[],function(err, result){
+			console.log('err' + err);
+			res.send(result);
+		});
+	})
+
+// -------------------------------------------
+// 7	/api/teacher/:teacherId/writeups
+
+
+// -------------------------------------------
+// 8	/api/teacher/:teacherId/assignments
+	app.get('/api/teacher/:teacherId/assignments', function(req,res){
+		var teacherId = req.params.teacherId;
+		// console.log('teacherId: ' + teacherId);
+
+		var sql = 
+		'select * from assignments ' +
+		'where tid = ' + teacherId;
+
+		console.log(sql);
+
+		connection.query(sql,[],function(err, result){
+			console.log('err' + err);
+			res.send(result);
+		});
+	})
+
+// -------------------------------------------
+// 9 
+
+
+
+
+
+
+
+
 
 // ============================================
 //=================================== 

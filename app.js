@@ -172,6 +172,21 @@ app.get('/api/search/parent/:searchvar', function(req,res){
 
 // -------------------------------------------
 // 9 
+app.get('/api/parent/:parentId/fees', function(req,res){
+	var teacherId = req.params.teacherId;
+	// console.log('teacherId: ' + teacherId);
+
+	var sql = 
+	'select * from fees ' +
+	'where pid = ' + parentId;
+
+	console.log(sql);
+
+	connection.query(sql,[],function(err, result){
+		console.log('err' + err);
+		res.send(result);
+	});
+})
 
 
 

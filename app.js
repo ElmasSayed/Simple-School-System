@@ -172,12 +172,12 @@ app.get('/api/search/parent/:searchvar', function(req,res){
 
 // -------------------------------------------
 // 9 
-app.get('/api/parent/:parentId/fees', function(req,res){
-	var teacherId = req.params.teacherId;
+app.get('/api/parent/:parentId/personalinfo', function(req,res){
+	var parentId = req.params.parentId;
 	// console.log('teacherId: ' + teacherId);
 
 	var sql = 
-	'select * from fees ' +
+	'select * from parents ' +
 	'where pid = ' + parentId;
 
 	console.log(sql);

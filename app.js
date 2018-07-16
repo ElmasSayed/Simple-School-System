@@ -169,8 +169,9 @@ app.get('/api/search/parent/:searchvar', function(req,res){
 			res.send(result);
 		});
 	})
-	// ------------------------------------------------------------------------
-// 10	/api/student/:studentId/personalinfo
+// ------------------------------------------------------------------------
+// STUDENTS PAGE
+// 9	/api/student/:studentId/personalinfo
 	app.get('/api/student/:studentId/personalinfo', function(req,res){
 		var studentId = req.params.studentId;
 		console.log('studentId: ' + studentId);
@@ -187,7 +188,7 @@ app.get('/api/search/parent/:searchvar', function(req,res){
 	})
 
 // ------------------------------------------------------------------------
-// 11	/api/student/:studentId/details
+// 10	/api/student/:studentId/details
 	app.get('/api/student/:studentId/details', function(req,res){
 		var studentId = req.params.studentId;
 		console.log('studentId: ' + studentId);
@@ -205,22 +206,33 @@ app.get('/api/search/parent/:searchvar', function(req,res){
 	})
 
 // ------------------------------------------------------------------------
-// 12	/api/student/:studentId/fees
+// 11	/api/student/:studentId/assignments
+app.get('/api/student/:studentId/assignments', function(req,res){
+	var studentId = req.params.studentId;
+	console.log('studentId: ' + studentId);
 
+	var sql = 'select * from assignments ' +
+	'join students on assignments.gid = students.gid ' +
+	' where sid = ' + studentId;
 
+	console.log(sql);
 
-
-
+	connection.query(sql,[],function(err, result){
+		console.log('err' + err);
+		res.send(result);
+	});
+})
 
 // =--------------------------------------------------
+// 12	/api/student/:studentId/fees
+
+// -------------------------------------------
 // 13	/api/student/:studentId/attendance
 
 
-
-
-
-// -------------------------------------------
-// 14 
+// --------------------------------------------------
+// PARENTS PAGE
+// 14 /api/parent/:parentId/personalInfo
 app.get('/api/parent/:parentId/personalinfo', function(req,res){
 	var parentId = req.params.parentId;
 	// console.log('teacherId: ' + teacherId);
@@ -236,13 +248,24 @@ app.get('/api/parent/:parentId/personalinfo', function(req,res){
 		res.send(result);
 	});
 })
+// ------------------------------------------------------------------
+// 15	/api/get/:parentId/studentsenrolled
+	app.get('/api/parent/:parentId/studentsenrolled', function(req,res){
+		var parentId = req.params.parentId;
+		console.log('parentId' + parentId);
 
+		var sql = 
+		'select * from students ' +
+		'where pid = ' + parentId;
 
+		// select * from students where pid = 2;
 
-
-
-
-
+		connection.query(sql,[],function(err, result){
+			console.log(sql);
+			res.send(result);
+		});
+	})
+ 
 // ============================================
 //=================================== 
 app.listen(3000, () => console.log('API is running on port 3000!'))

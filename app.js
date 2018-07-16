@@ -169,9 +169,58 @@ app.get('/api/search/parent/:searchvar', function(req,res){
 			res.send(result);
 		});
 	})
+	// ------------------------------------------------------------------------
+// 10	/api/student/:studentId/personalinfo
+	app.get('/api/student/:studentId/personalinfo', function(req,res){
+		var studentId = req.params.studentId;
+		console.log('studentId: ' + studentId);
+
+		var sql = 'select * from students ' +
+		'where sid = ' + studentId;
+
+		console.log(sql);
+
+		connection.query(sql,[],function(err, result){
+			console.log('err' + err);
+			res.send(result);
+		});
+	})
+
+// ------------------------------------------------------------------------
+// 11	/api/student/:studentId/details
+	app.get('/api/student/:studentId/details', function(req,res){
+		var studentId = req.params.studentId;
+		console.log('studentId: ' + studentId);
+
+		var sql = 'select parents.* from parents ' +
+				  'join students on parents.pid = students.pid ' +
+		          'where sid = ' + studentId;
+
+		console.log(sql);
+
+		connection.query(sql,[],function(err, result){
+			console.log('err' + err);
+			res.send(result);
+		});
+	})
+
+// ------------------------------------------------------------------------
+// 12	/api/student/:studentId/fees
+
+
+
+
+
+
+// =--------------------------------------------------
+// 13	/api/student/:studentId/attendance
+
+
+
+
 
 // -------------------------------------------
-// 9 
+// 14 
 app.get('/api/parent/:parentId/personalinfo', function(req,res){
 	var parentId = req.params.parentId;
 	// console.log('teacherId: ' + teacherId);
@@ -187,8 +236,6 @@ app.get('/api/parent/:parentId/personalinfo', function(req,res){
 		res.send(result);
 	});
 })
-
-
 
 
 

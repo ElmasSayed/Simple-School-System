@@ -70,9 +70,20 @@ app.get('/', (req, res) => res.send('786!BIS'))
 	})
 
 
-// // 3	/api/search/parent
-// app.get('/api/search/parent', function(req,res){
-// 	var searchvar = req.query.searchvar;
+// // 3	/api/search/parent               WITH QUERY
+app.get('/api/search/parent', function(req,res){
+	var searchvar = req.query.searchvar;
+	console.log('searchvar: ' + searchvar);
+
+	var qry = 'select * from parents where pname like "%' + searchvar + '%"'
+	connection.query(qry,[],function(err, result){
+		console.log('err' + err);
+		res.send(result);
+	});
+})
+//--------------------         WITH PARAMS
+// app.get('/api/search/parent/:searchvar', function(req,res){
+// 	var searchvar = decodeURI(req.params('searchvar'));
 // 	console.log('searchvar: ' + searchvar);
 
 // 	var qry = 'select * from parents where pname like "%' + searchvar + '%"'
@@ -82,25 +93,14 @@ app.get('/', (req, res) => res.send('786!BIS'))
 // 	});
 // })
 //--------------------
-app.get('/api/search/parent/:searchvar', function(req,res){
-	var searchvar = decodeURI(req.params('searchvar'));
-	console.log('searchvar: ' + searchvar);
-
-	var qry = 'select * from parents where pname like "%' + searchvar + '%"'
-	connection.query(qry,[],function(err, result){
-		console.log('err' + err);
-		res.send(result);
-	});
-})
-//--------------------
 
 // TEACHERS PAGE  
-// 4	/api/teacher/:teacherId/personalInfo 
-	app.get('/api/teacher/:teacherId/personalInfo', function(req,res){
-		var teacherId = req.params('teacherId');
+// 4	/api/teacher/:teacherid/personalInfo 
+	app.get('/api/teacher/:teacherid/personalInfo', function(req,res){
+		var teacherId = req.params.teacherid;
 		console.log('teacherId: ' + teacherId);
 
-		var sql = 'select * from teachers where Tid =  ' +  teacherId
+		var sql = 'select * from teachers where tid =  ' +  teacherId
 
 		connection.query(sql,[],function(err, result){
 			console.log('err' + err);
@@ -266,8 +266,6 @@ app.get('/api/parent/:parentId/personalinfo', function(req,res){
 		});
 	})
  // ============================================
-
-
  
 //=================================== 
 app.listen(3000, () => console.log('API is running on port 3000!'))

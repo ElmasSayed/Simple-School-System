@@ -4,11 +4,11 @@ const mysql = require('mysql');
 
 
 var connection = mysql.createConnection({
-port:3306,
-host:'localhost',
-user:'root',
-password:'humzas',
-database:'simpleschoolsystem'
+	port:3306,
+	host:'localhost',
+	user:'root',
+	password:'humzas',
+	database:'simpleschoolsystem'
 });
 
 //  (2) yahan par line activate kiya. so you can make and receive call anytime. next- jab query karenge tab actual call hoga
@@ -32,7 +32,6 @@ connection.connect(function(err){
 app.get('/', (req, res) => res.send('786!BIS'))
 
 // ======================================================
-
 // 	SEARCH PAGE
 // 1) For teacher
 	app.get('/api/search/teacher', function(req,res){
@@ -52,6 +51,7 @@ app.get('/', (req, res) => res.send('786!BIS'))
 		});
 	})
 
+// ----------------------------------------------------------
 // 2  /api/search/student
 	app.get('/api/search/student', function(req,res){
 	var searchvar = req.query.searchvar;

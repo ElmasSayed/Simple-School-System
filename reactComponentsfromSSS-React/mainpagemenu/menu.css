@@ -1,0 +1,19 @@
+
+/* -------------NAV --------------------- */
+.nav {
+    background-color: rgb(211, 195, 226);
+    height: 45px;
+    padding: 10px;
+    margin-top: 5px;
+
+  }
+
+  .teacher {
+      height: 250px;
+      width: 200px;
+  }
+
+.navi{
+    background-color: black;
+}
+

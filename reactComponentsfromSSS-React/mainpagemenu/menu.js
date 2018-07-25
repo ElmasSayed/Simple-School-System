@@ -5,18 +5,30 @@ import parent from './images/parent.png';
 import admin from './images/admin.png';
 import './menu.css';
 
+//  import Search from './search/search.js'
+
 class Menu extends Component {
+    getInitialState(){
+        return { search:false}
+    }
+    search(){
+        // alert( 'hi');
+        return(){ 
+            this.setState({search:false});
+        }; 
+    }
+
     render() {
       return (
         <div className="App">
             <div className="menu container bg-3 text-center"> 
                 <div className="row navi">
-                    <a href="http://www.yahoo.com" target="_blank">
-                        <div className="col-sm-3" id="teachers">
+                    {/* <a href="http://www.yahoo.com" target="_blank"> */}
+                        <div onClick={this.search} className="col-sm-3" id="teachers">
                             <p className="nav">Teachers</p>
                             <img src={teacher} className="teacher" alt="Image"/>
                         </div>
-                    </a>
+                    {/* </a> */}
                     <a href="http://www.yahoo.com" target="_blank">
                         <div className="col-sm-3 " id="students">
                             <p className="nav">Students</p>
